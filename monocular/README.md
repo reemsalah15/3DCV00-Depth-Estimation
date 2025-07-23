@@ -10,11 +10,11 @@
 
 ## Quantitative Results
 
-| Metric | Value ↓ |
+| Metric | Value |
 |--------|---------|
-| **MAE** | 0.5266 |
-| **RMSE** | 0.5920 |
-
+| **MAE** | 0.1790 |
+| **RMSE** | 0.2466 |
+| **AbsRel** | 0.8243 |
 
 *Lower is better for all metrics.*
 

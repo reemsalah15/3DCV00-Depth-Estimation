@@ -24,7 +24,7 @@ This repository provides an implementation, analysis, and comparison of **Monocu
 
 | Method        | MAE ↓      | RMSE ↓     | EPE ↓       | Bad-1 ↓    |
 | ------------- | ---------- | ---------- | ----------- | ---------- |
-| **Monocular** | **0.5266** | **0.5920** | -           | -          |
+| **Monocular** | **0.1790** | **0.2466** | -           | -          |
 | **Stereo**    | **1.0023** | **1.0025** | **78.4610** | **99.99%** |
 
 > **Note:** Although stereo is generally expected to be more accurate, these results indicate that the monocular method performed better under this specific configuration. This may be due to normalization or scaling differences in the stereo disparity range.
