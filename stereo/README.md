@@ -1,100 +1,99 @@
-# Depth Estimation on CARLA Dataset
+# Stereo Depth Estimation
 
-This repository provides an implementation, analysis, and comparison of **Monocular** and **Stereo** depth estimation methods on the **CARLA Simulator** dataset.
-
----
-
-## Models Used
-
-### 1. Monocular Depth Estimation
-- **Model:** Depth-Anything-V2 (ViT-Large)
-- **Input:** Single RGB image
-- **Output:** Depth map (flipped & normalized)
-- **Use Case:** Lightweight, works with a single camera.
-
-### 2. Stereo Depth Estimation
-- **Model:** RAFT-Stereo (SceneFlow Pre-trained)
+## Model Information
+- **Model Used:** RAFT-Stereo (SceneFlow Pre-trained)
 - **Input:** Left and Right stereo image pairs
-- **Output:** Disparity map (normalized)
-- **Use Case:** High accuracy where stereo cameras are available.
+- **Output:** Disparity map (normalized to [0,1])
+- **Use Case:** Accurate depth estimation in structured environments when stereo cameras are available.
 
 ---
 
 ## Quantitative Results
 
-| Method      | MAE ↓ | RMSE ↓ | AbsRel ↓ | EPE ↓ | Bad-1 ↓ |
-|-------------|-------|--------|----------|-------|---------|
-| Monocular   | **0.38** | 0.46   | 0.27     |   -   |   -     |
-| Stereo      | 0.31  | **0.42**   |   -      | **1.85**  | **12.3%** |
+| Metric | Value ↓ |
+|--------|---------|
+| **MAE** | 1.0023 |
+| **RMSE** | 1.0025 |
+| **EPE** | 78.4610 |
+| **Bad-1** | 99.99% |
 
- **Stereo performs better in overall accuracy**, but **Monocular** is more lightweight and suitable for single-camera setups.
-
----
-
-## Qualitative Examples
-
-### Monocular
-![Mono Best](./monocular/outputs/best_example.png)  
-![Mono Worst](./monocular/outputs/worst_example.png)
-
-### Stereo
-![Stereo Best](./stereo/outputs/best_example.png)  
-![Stereo Worst](./stereo/outputs/worst_example.png)
+*Lower is better for all metrics.*
 
 ---
 
-##  Discussion
+## Qualitative Results
 
-### Strengths
-- **Monocular:**
-  - Lightweight, single-image input.
-  - Works even without stereo hardware.
-- **Stereo:**
-  - More geometrically consistent.
-  - Better performance in textured regions.
+### Best Example
+![Best Example](./outputs/best_example.png)
 
-### Weaknesses
-- **Monocular:** Relies heavily on learned priors, struggles in unseen environments.
-- **Stereo:** Struggles with occlusions, reflective/textureless surfaces.
+### Worst Example
+![Worst Example](./outputs/worst_example.png)
 
-### Failure Cases
-- Monocular fails in far-distance objects.
-- Stereo fails in repetitive textures and occluded regions.
-
-### Potential Improvements
-- Fine-tune both methods on CARLA-like domains.
-- Combine monocular priors with stereo matching.
-- Apply post-processing (left-right consistency checks).
+### Error Distribution
+![Histogram](./outputs/histogram.png)
 
 ---
 
-##  Folder Structure
+##  How to Run
 
-- **`/monocular`** → Monocular notebook, requirements, and outputs.
-- **`/stereo`** → Stereo notebook, requirements, and outputs.
+1. **Install dependencies**  
+Make sure you are in the `stereo` folder, then run:
+```bash
+pip install -r requirements.txt
+````
 
-Check individual READMEs for detailed instructions.
+2. **Ensure weights are available**  
+The pre-trained weights (`raftstereo-sceneflow.pth`) are already included in this folder.
+
+4. **Run the Notebook**
+   Open and execute:
+
+```bash
+stereo_notebook.ipynb
+```
+
+4. **Outputs**
+
+* Disparity maps will be saved automatically.
+* Best, Worst, and Histogram images will be saved in the `outputs/` folder.
+
+---
+
+## Discussion
+
+### **Strengths**
+
+* High geometric consistency in textured regions.
+* Outperforms monocular methods in well-structured environments.
+
+### **Weaknesses**
+
+* Sensitive to low-texture regions, repetitive patterns, and occlusions.
+* Computationally heavier compared to monocular methods.
+
+### **Failure Cases**
+
+* Reflective or transparent surfaces produce incorrect disparity.
+* Distant background regions often have inaccurate depth.
+
+### **Potential Improvements**
+
+* Fine-tuning on CARLA-like data.
+* Post-processing (left-right consistency checks).
+* Combining stereo disparity with monocular priors.
+
+---
+
+## Folder Structure
 
 ```
-3DCV00-Depth-Estimation/
-│
-├── monocular/
-│   ├── README.md                   # Introduction, results, and instructions for running the monocular method
-│   ├── mono_notebook.ipynb         # Jupyter Notebook: inference, metrics calculation, and visualizations
-│   ├── requirements.txt            # Required Python packages for the monocular method
-│   └── outputs/                    # Output images (Best, Worst, Error Maps, Sample visualizations)
-│       ├── best_example.png
-│       ├── worst_example.png
-│       └── histogram.png
-│
-├── stereo/
-│   ├── README.md                   # Introduction, results, and instructions for running the stereo method
-│   ├── stereo_notebook.ipynb       # Jupyter Notebook: inference, metrics calculation, and visualizations
-│   ├── requirements.txt            # Required Python packages for the stereo method
-│   └── outputs/                    # Output images (Best, Worst, Error Maps, Sample visualizations)
-│       ├── best_example.png
-│       ├── worst_example.png
-│       └── histogram.png
-│
-└── README.md                       # Main report comparing Monocular and Stereo (intro, results, discussion)
+stereo/
+├── README.md                   # Introduction, results, and instructions for running the stereo method
+├── stereo_notebook.ipynb       # Jupyter Notebook: inference, metrics calculation, and visualizations
+├── raftstereo-sceneflow.pth    # Pre-trained weights (SceneFlow model)
+├── requirements.txt            # Required Python packages for the stereo method
+└── outputs/                    # Output images (Best, Worst, Error Maps, Sample visualizations)
+    ├── best_example.png
+    ├── worst_example.png
+    └── histogram.png
 ```
