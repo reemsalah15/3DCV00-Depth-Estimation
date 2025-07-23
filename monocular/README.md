@@ -1,100 +1,93 @@
-# Depth Estimation on CARLA Dataset
+# Monocular Depth Estimation
 
-This repository provides an implementation, analysis, and comparison of **Monocular** and **Stereo** depth estimation methods on the **CARLA Simulator** dataset.
-
----
-
-## Models Used
-
-### 1. Monocular Depth Estimation
-- **Model:** Depth-Anything-V2 (ViT-Large)
+##  Model Information
+- **Model Used:** Depth-Anything-V2 (ViT-Large)
 - **Input:** Single RGB image
-- **Output:** Depth map (flipped & normalized)
-- **Use Case:** Lightweight, works with a single camera.
-
-### 2. Stereo Depth Estimation
-- **Model:** RAFT-Stereo (SceneFlow Pre-trained)
-- **Input:** Left and Right stereo image pairs
-- **Output:** Disparity map (normalized)
-- **Use Case:** High accuracy where stereo cameras are available.
+- **Output:** Depth map (normalized & flipped to align with ground truth)
+- **Use Case:** Lightweight and suitable for real-time depth estimation using a single camera.
 
 ---
 
 ## Quantitative Results
 
-| Method      | MAE ↓ | RMSE ↓ | AbsRel ↓ | EPE ↓ | Bad-1 ↓ |
-|-------------|-------|--------|----------|-------|---------|
-| Monocular   | **0.38** | 0.46   | 0.27     |   -   |   -     |
-| Stereo      | 0.31  | **0.42**   |   -      | **1.85**  | **12.3%** |
+| Metric | Value ↓ |
+|--------|---------|
+| **MAE** | 0.5266 |
+| **RMSE** | 0.5920 |
 
- **Stereo performs better in overall accuracy**, but **Monocular** is more lightweight and suitable for single-camera setups.
 
----
-
-## Qualitative Examples
-
-### Monocular
-![Mono Best](./monocular/outputs/best_example.png)  
-![Mono Worst](./monocular/outputs/worst_example.png)
-
-### Stereo
-![Stereo Best](./stereo/outputs/best_example.png)  
-![Stereo Worst](./stereo/outputs/worst_example.png)
+*Lower is better for all metrics.*
 
 ---
 
-##  Discussion
+## Qualitative Results
 
-### Strengths
-- **Monocular:**
-  - Lightweight, single-image input.
-  - Works even without stereo hardware.
-- **Stereo:**
-  - More geometrically consistent.
-  - Better performance in textured regions.
+### Best Example
+![Best Example](./output/best_example.png)
 
-### Weaknesses
-- **Monocular:** Relies heavily on learned priors, struggles in unseen environments.
-- **Stereo:** Struggles with occlusions, reflective/textureless surfaces.
+### Worst Example
+![Worst Example](./output/worst_example.png)
 
-### Failure Cases
-- Monocular fails in far-distance objects.
-- Stereo fails in repetitive textures and occluded regions.
-
-### Potential Improvements
-- Fine-tune both methods on CARLA-like domains.
-- Combine monocular priors with stereo matching.
-- Apply post-processing (left-right consistency checks).
+### Error Distribution
+![Histogram](./output/histogram.png)
 
 ---
 
-##  Folder Structure
+## How to Run
 
-- **`/monocular`** → Monocular notebook, requirements, and outputs.
-- **`/stereo`** → Stereo notebook, requirements, and outputs.
+1. **Install dependencies**  
+Make sure you are in the `monocular` folder, then run:
+```bash
+pip install -r requirements.txt
+````
 
-Check individual READMEs for detailed instructions.
+2. **Run the Notebook**
+   Open the Jupyter Notebook and execute all cells:
+
+```bash
+Monocular.ipynb
+```
+
+3. **Outputs**
+
+* Depth maps will be saved automatically.
+* Best, Worst, and Histogram images will be saved in the `outputs/` folder.
+
+---
+
+## Discussion
+
+### **Strengths**
+
+* Lightweight and fast → suitable for real-time applications.
+* Works with a single camera (no stereo hardware required).
+* Performs reasonably well on CARLA synthetic data.
+
+### **Weaknesses**
+
+* Relies heavily on learned priors → performance may degrade on unseen domains.
+* Less accurate for far-distance objects compared to stereo methods.
+
+### **Failure Cases**
+
+* Flat surfaces, reflective objects, and distant background regions often have inconsistent depth values.
+
+### **Potential Improvements**
+
+* Fine-tuning the model on CARLA-like domains to improve accuracy.
+* Combining monocular depth priors with stereo matching for hybrid approaches.
+
+---
+
+## Folder Structure
 
 ```
-3DCV00-Depth-Estimation/
-│
-├── monocular/
-│   ├── README.md                   # Introduction, results, and instructions for running the monocular method
-│   ├── mono_notebook.ipynb         # Jupyter Notebook: inference, metrics calculation, and visualizations
-│   ├── requirements.txt            # Required Python packages for the monocular method
-│   └── outputs/                    # Output images (Best, Worst, Error Maps, Sample visualizations)
-│       ├── best_example.png
-│       ├── worst_example.png
-│       └── histogram.png
-│
-├── stereo/
-│   ├── README.md                   # Introduction, results, and instructions for running the stereo method
-│   ├── stereo_notebook.ipynb       # Jupyter Notebook: inference, metrics calculation, and visualizations
-│   ├── requirements.txt            # Required Python packages for the stereo method
-│   └── outputs/                    # Output images (Best, Worst, Error Maps, Sample visualizations)
-│       ├── best_example.png
-│       ├── worst_example.png
-│       └── histogram.png
-│
-└── README.md                       # Main report comparing Monocular and Stereo (intro, results, discussion)
+monocular/
+├── mono_notebook.ipynb     # Full inference, metrics, and visualization
+├── requirements.txt        # Required Python packages
+└── outputs/                # Predicted depth visualizations
+    ├── best_example.png
+    ├── worst_example.png
+    └── histogram.png
 ```
+
