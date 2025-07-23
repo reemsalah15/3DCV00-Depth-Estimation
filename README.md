@@ -84,7 +84,7 @@ This repository provides an implementation, analysis, and comparison of **Monocu
 │
 ├── monocular/
 │   ├── README.md                   # Introduction, results, and instructions for running the monocular method
-│   ├── mono\_notebook.ipynb         # Jupyter Notebook: inference, metrics calculation, and visualizations
+│   ├── Monocular.ipynb         # Jupyter Notebook: inference, metrics calculation, and visualizations
 │   ├── requirements.txt            # Required Python packages for the monocular method
 │   └── outputs/                    # Output images (Best, Worst, Error Maps, Sample visualizations)
 │       ├── best\_example.png
