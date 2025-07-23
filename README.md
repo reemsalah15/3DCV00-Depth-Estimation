@@ -22,10 +22,11 @@ This repository provides an implementation, analysis, and comparison of **Monocu
 
 ## Quantitative Results
 
-| Method      | MAE ↓ | RMSE ↓ | AbsRel ↓ | EPE ↓ | Bad-1 ↓ |
-|-------------|-------|--------|----------|-------|---------|
-| Monocular   | **0.38** | 0.46   | 0.27     |   -   |   -     |
-| Stereo      | 0.31  | **0.42**   |   -      | **1.85**  | **12.3%** |
+| Method        | MAE ↓      | RMSE ↓     | EPE ↓       | Bad-1 ↓    |
+| ------------- | ---------- | ---------- | ----------- | ---------- |
+| **Monocular** | **0.5266** | **0.5920** | -           | -          |
+| **Stereo**    | **1.0023** | **1.0025** | **78.4610** | **99.99%** |
+
 
  **Stereo performs better in overall accuracy**, but **Monocular** is more lightweight and suitable for single-camera setups.
 
@@ -34,8 +35,8 @@ This repository provides an implementation, analysis, and comparison of **Monocu
 ## Qualitative Examples
 
 ### Monocular
-![Mono Best](./monocular/outputs/best_example.png)  
-![Mono Worst](./monocular/outputs/worst_example.png)
+![Mono Best](/monocular/output/best_example.png)  
+![Mono Worst](/monocular/output/worst_example.png)
 
 ### Stereo
 ![Stereo Best](./stereo/outputs/best_example.png)  
