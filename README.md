@@ -87,18 +87,18 @@ This repository provides an implementation, analysis, and comparison of **Monocu
 │   ├── Monocular.ipynb         # Jupyter Notebook: inference, metrics calculation, and visualizations
 │   ├── requirements.txt            # Required Python packages for the monocular method
 │   └── outputs/                    # Output images (Best, Worst, Error Maps, Sample visualizations)
-│       ├── best\_example.png
-│       ├── worst\_example.png
+│       ├── best_example.png
+│       ├── worst_example.png
 │       └── histogram.png
 │
 ├── stereo/
 │   ├── README.md                   # Introduction, results, and instructions for running the stereo method
-│   ├── stereo\_notebook.ipynb       # Jupyter Notebook: inference, metrics calculation, and visualizations
-│   ├── raftstereo-sceneflow\.pth    # Pre-trained weights (SceneFlow model)
+│   ├── stereo_notebook.ipynb       # Jupyter Notebook: inference, metrics calculation, and visualizations
+│   ├── raftstereo-sceneflow.pth    # Pre-trained weights (SceneFlow model)
 │   ├── requirements.txt            # Required Python packages for the stereo method
 │   └── outputs/                    # Output images (Best, Worst, Error Maps, Sample visualizations)
-│       ├── best\_example.png
-│       ├── worst\_example.png
+│       ├── best_example.png
+│       ├── worst_example.png
 │       └── histogram.png
 │
 └── README.md                       # Main report comparing Monocular and Stereo (intro, results, discussion)
