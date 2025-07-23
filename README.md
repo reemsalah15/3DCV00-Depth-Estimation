@@ -91,7 +91,7 @@ Check individual READMEs for detailed instructions.
 ├── stereo/
 │   ├── README.md                   # Introduction, results, and instructions for running the stereo method
 │   ├── stereo_notebook.ipynb       # Jupyter Notebook: inference, metrics calculation, and visualizations
-│   ├── raftstereo-sceneflow.pth    # weights       
+│   ├── raftstereo-sceneflow.pth    # Pre-trained weights (SceneFlow model)     
 |   ├── requirements.txt            # Required Python packages for the stereo method
 │   └── outputs/                    # Output images (Best, Worst, Error Maps, Sample visualizations)
 │       ├── best_example.png
